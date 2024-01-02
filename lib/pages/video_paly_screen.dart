@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../custom_widget/custom_widget.dart';
+import '../custom_widget/action_section.dart';
+import '../custom_widget/comment_section.dart';
+import '../custom_widget/header_section.dart';
+import '../custom_widget/subscribe_section.dart';
 
 class VideoPlayScreen extends StatefulWidget {
   const VideoPlayScreen({super.key});

@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:video_playe_app/models/video_player_models.dart';
 
 import '../pages/video_paly_screen.dart';
 
 class VideoPlayDetails extends StatelessWidget {
   const VideoPlayDetails({
     super.key,
+    required this.results,
   });
+
+  final Results results;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +42,33 @@ class VideoPlayDetails extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  Image.network(
-                      'https://th.bing.com/th/id/R.86a8179b2fabd7783eeb7c5cbe5cfa03?rik=c4aPFE24miQgvQ&pid=ImgRaw&r=0'),
+                  Image.network(results.thumbnail.toString()),
+                   Positioned(
+                    right: 10,
+                    bottom: 10,
+                    child: Container(
+                      width: 50,
+                      height: 20,
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      decoration: ShapeDecoration(
+                        color: Colors.black.withOpacity(0.9200000166893005),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                      ),
+                      child:  Center(
+                        child: Text(
+                          '${results.duration}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                            height: 0.12,
+                            letterSpacing: -0.24,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
               Padding(
@@ -48,21 +77,20 @@ class VideoPlayDetails extends StatelessWidget {
                   leading: Container(
                     width: 40,
                     height: 40,
-                    decoration: const ShapeDecoration(
+                    decoration: ShapeDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
-                            "https://th.bing.com/th/id/OIP.1d7TQI67pwfr0F5jqTgD1AHaGw?rs=1&pid=ImgDetMain"),
+                        image: NetworkImage(results.channelImage.toString()),
                         fit: BoxFit.fill,
                       ),
-                      shape: OvalBorder(),
+                      shape: const OvalBorder(),
                     ),
                   ),
-                  title: const SizedBox(
+                  title: SizedBox(
                     width: 250,
                     height: 30,
                     child: Text(
-                      'আরব নেতাদের যে ভুলে ফি*লি*স্তি*নের এই দুর্দাশা | আবু ত্বহা মুহাম্মদ আদনান',
-                      style: TextStyle(
+                      '${results.title}',
+                      style: const TextStyle(
                         color: Color(0xFF1A202C),
                         fontSize: 12,
                         fontFamily: 'Hind Siliguri',
@@ -78,26 +106,26 @@ class VideoPlayDetails extends StatelessWidget {
                       color: Color(0xFFD9D9D9),
                     ),
                   ),
-                  subtitle: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5.0),
+                  subtitle: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
                     child: Row(
                       children: [
                         Text(
-                          '53,245 views.',
-                          style: TextStyle(
+                          '${results.viewers}',
+                          style: const TextStyle(
                             color: Color(0xFF718096),
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         Text(
-                          'Feb 21, 2021',
-                          style: TextStyle(
+                          '${results.dateAndTime}',
+                          style: const TextStyle(
                             color: Color(0xFF718096),
-                            fontSize: 13,
+                            fontSize: 14,
                             fontWeight: FontWeight.w400,
                           ),
                         ),

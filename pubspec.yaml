@@ -41,6 +41,7 @@ dependencies:
   intl:
   get:
   appinio_video_player:
+  http:
 
 dev_dependencies:
   flutter_test:

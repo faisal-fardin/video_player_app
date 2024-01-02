@@ -51,32 +51,32 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, index) {
-          Column(
-            children: [
-              HeaderSection(
-                results: _videoPlayerModels.results![index],
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0),
-                child: Column(
-                  children: [
-                    ActionSection(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SubscribeSection(),
-                    Divider(),
-                    CommentSection(),
-                  ],
+    return Scaffold(
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: 1,
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                HeaderSection(results: _videoPlayerModels.results![index]),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  child: Column(
+                    children: [
+                      const ActionSection(),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SubscribeSection(results: _videoPlayerModels.results![index]),
+                      const Divider(),
+                      const CommentSection(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }

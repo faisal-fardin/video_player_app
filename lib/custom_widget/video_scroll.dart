@@ -17,6 +17,11 @@ class VideoPlayDetails extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.to(const VideoPlayScreen());
+        print('id - ${results.id}', );
+        print('manifest- ${results.manifest}', );
+        print('title - ${results.title}', );
+        print('th - ${results.title}', );
+
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

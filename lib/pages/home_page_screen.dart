@@ -59,6 +59,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
       body: ListView.builder(
         itemCount: _videoPlayerModels.results?.length ?? 0,
         itemBuilder: (context, index) {
+
           return VideoPlayDetails(
             results: _videoPlayerModels.results![index],
           );

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:video_playe_app/pages/video_paly_screen.dart';
 import 'package:video_playe_app/provider/apidata_provider.dart';
+import 'package:video_playe_app/utlis/helper_functions.dart';
 
 class HomePageScreen extends StatefulWidget {
   HomePageScreen({super.key});
@@ -23,7 +24,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Video'),
+        title: const Text('Trending Videos'),
       ),
       body: Consumer<ApiDataProvider>(
         builder: (context, provider, child) {
@@ -59,19 +60,24 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             children: [
                               Stack(
                                 children: [
-                                  Image.network('${provider.videoPlayerModels!.results![index].thumbnail}'),
+                                  Image.network(
+                                      '${provider.videoPlayerModels!.results![index].thumbnail}'),
                                   Positioned(
                                     right: 10,
                                     bottom: 10,
                                     child: Container(
                                       width: 50,
                                       height: 20,
-                                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 4),
                                       decoration: ShapeDecoration(
-                                        color: Colors.black.withOpacity(0.9200000166893005),
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                                        color: Colors.black
+                                            .withOpacity(0.9200000166893005),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4)),
                                       ),
-                                      child:  Center(
+                                      child: Center(
                                         child: Text(
                                           '${provider.videoPlayerModels!.results![index].duration}',
                                           style: const TextStyle(
@@ -86,14 +92,16 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
                                 child: ListTile(
                                   leading: Container(
                                     width: 40,
                                     height: 40,
                                     decoration: ShapeDecoration(
                                       image: DecorationImage(
-                                        image: NetworkImage('${provider.videoPlayerModels!.results![index].channelImage}'),
+                                        image: NetworkImage(
+                                            '${provider.videoPlayerModels!.results![index].channelImage}'),
                                         fit: BoxFit.fill,
                                       ),
                                       shape: const OvalBorder(),
@@ -120,7 +128,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                     ),
                                   ),
                                   subtitle: Padding(
-                                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 5.0),
                                     child: Row(
                                       children: [
                                         Text(

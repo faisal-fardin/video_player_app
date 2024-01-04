@@ -1,14 +1,10 @@
 
 import 'package:flutter/material.dart';
 
-class CommentSection extends StatelessWidget {
-  const CommentSection({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
+Widget commentSection() {
+  return Padding(
+    padding: const EdgeInsets.all(12.0),
+    child: Column(
       children: [
         Row(
           mainAxisSize: MainAxisSize.min,
@@ -39,8 +35,8 @@ class CommentSection extends StatelessWidget {
             ),
             decoration: const InputDecoration(
                 suffixIcon: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 10),
+                  padding:
+                  EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
                   child: Icon(
                     Icons.arrow_forward_ios,
                     size: 25,
@@ -50,16 +46,13 @@ class CommentSection extends StatelessWidget {
                 fillColor: Colors.white,
                 filled: true,
                 hintText: 'Add Comment',
-                hintStyle: TextStyle(
-                    fontSize: 16, color: Color(0xFFC1BDB9)),
+                hintStyle: TextStyle(fontSize: 16, color: Color(0xFFC1BDB9)),
                 border: OutlineInputBorder(),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      width: 2, color: Color(0xFFE2E8F0)),
+                  borderSide: BorderSide(width: 2, color: Color(0xFFE2E8F0)),
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      width: 2, color: Color(0xFFE2E8F0)),
+                  borderSide: BorderSide(width: 2, color: Color(0xFFE2E8F0)),
                 )),
           ),
         ),
@@ -115,6 +108,6 @@ class CommentSection extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
+    ),
+  );
 }

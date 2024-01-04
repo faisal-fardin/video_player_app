@@ -1,68 +1,162 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:video_playe_app/models/video_player_models.dart';
+import 'package:provider/provider.dart';
 import 'package:video_playe_app/pages/video_paly_screen.dart';
-import 'package:video_playe_app/utlis/urls.dart';
-
-import '../custom_widget/video_scroll.dart';
-import '../services/network_caller.dart';
-import '../services/network_response.dart';
+import 'package:video_playe_app/provider/apidata_provider.dart';
 
 class HomePageScreen extends StatefulWidget {
-  const HomePageScreen({super.key});
+  HomePageScreen({super.key});
 
   @override
   State<HomePageScreen> createState() => _HomePageScreenState();
 }
 
 class _HomePageScreenState extends State<HomePageScreen> {
-
-  VideoPlayerModels _videoPlayerModels = VideoPlayerModels();
-  bool _getNewTaskInProgress = false;
-
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getVideoDetails();
-    });
-  }
-
-  Future<void> getVideoDetails() async {
-    _getNewTaskInProgress = true;
-    if (mounted) {
-      setState(() {});
-    }
-    final NetworkResponse response =
-        await NetworkCaller().getRequest(Urls.baseUrl);
-
-    if (response.isSuccess) {
-      _videoPlayerModels = VideoPlayerModels.fromJson(response.body!);
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Get Video Details')));
-      }
-    }
-    _getNewTaskInProgress = false;
-    if (mounted) {
-      setState(() {});
-    }
+  void didChangeDependencies() {
+    Provider.of<ApiDataProvider>(context, listen: false).getRequest();
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Trending Videos'),
+        title: const Text('Video'),
       ),
-      body: ListView.builder(
-        itemCount: _videoPlayerModels.results?.length ?? 0,
-        itemBuilder: (context, index) {
-
-          return VideoPlayDetails(
-            results: _videoPlayerModels.results![index],
-          );
+      body: Consumer<ApiDataProvider>(
+        builder: (context, provider, child) {
+          return provider.hasDataLoaded
+              ? ListView.builder(
+                  itemCount: provider.videoPlayerModels!.results!.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        Get.to(const VideoPlayScreen());
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 360,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: ShapeDecoration(
+                            color: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            shadows: const [
+                              BoxShadow(
+                                color: Color(0x14202028),
+                                blurRadius: 20,
+                                offset: Offset(0, 0),
+                                spreadRadius: 0,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Stack(
+                                children: [
+                                  Image.network('${provider.videoPlayerModels!.results![index].thumbnail}'),
+                                  Positioned(
+                                    right: 10,
+                                    bottom: 10,
+                                    child: Container(
+                                      width: 50,
+                                      height: 20,
+                                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                                      decoration: ShapeDecoration(
+                                        color: Colors.black.withOpacity(0.9200000166893005),
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                                      ),
+                                      child:  Center(
+                                        child: Text(
+                                          '${provider.videoPlayerModels!.results![index].duration}',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                child: ListTile(
+                                  leading: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage('${provider.videoPlayerModels!.results![index].channelImage}'),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      shape: const OvalBorder(),
+                                    ),
+                                  ),
+                                  title: SizedBox(
+                                    width: 250,
+                                    height: 30,
+                                    child: Text(
+                                      '${provider.videoPlayerModels!.results![index].title}',
+                                      style: const TextStyle(
+                                        color: Color(0xFF1A202C),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800,
+                                        height: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  trailing: IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.more_vert_outlined,
+                                      color: Color(0xFFD9D9D9),
+                                    ),
+                                  ),
+                                  subtitle: Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          '${provider.videoPlayerModels!.results![index].viewers}',
+                                          style: const TextStyle(
+                                            color: Color(0xFF718096),
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        Text(
+                                          '${provider.videoPlayerModels!.results![index].dateAndTime}',
+                                          style: const TextStyle(
+                                            color: Color(0xFF718096),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                );
         },
       ),
     );

@@ -21,16 +21,16 @@ class _HeaderSectionState extends State<HeaderSection> {
   @override
   void initState() {
     _videoPlayerController =
-        VideoPlayerController.network('${widget.results.manifest}')
-          ..initialize().then((value) => setState(() {}));
+    VideoPlayerController.network('${widget.results.manifest}')
+      ..initialize().then((value) => setState(() {}));
     _customVideoPlayerController = CustomVideoPlayerController(
-      context: context,
-      videoPlayerController: _videoPlayerController,
-      customVideoPlayerSettings: const CustomVideoPlayerSettings(
-        placeholderWidget: Center(
-          child: CircularProgressIndicator(),
+        context: context,
+        videoPlayerController: _videoPlayerController,
+        customVideoPlayerSettings: const CustomVideoPlayerSettings(
+            placeholderWidget: Center(
+              child: CircularProgressIndicator(),
+            )
         )
-      )
     );
     super.initState();
   }
